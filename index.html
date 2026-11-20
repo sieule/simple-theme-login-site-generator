@@ -2,49 +2,93 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tạo trang đăng nhập nhanh</title>
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a href="/" class="home-btn" title="Home">
+        <span aria-hidden="true">🏠</span>
+        <span data-i18n="button_home">Về trang chủ</span>
+    </a>
+
+    <div class="lang-selector">
+        <label for="langSelect" data-i18n="lang_label">Ngôn ngữ</label>
+        <select id="langSelect">
+            <option value="vi">Tiếng Việt</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+        </select>
+    </div>
+
     <div class="container">
+        <!-- CỘT TRÁI: nhập liệu -->
         <div class="left-column">
-            <h2>Nhập Thông Tin</h2>
+            <h2 data-i18n="heading_input">Nhập Thông Tin</h2>
             <form id="colorForm">
                 <table>
-                <tr><td><label>Độ nghiêng chuyển màu</label></td><td>
-                <input type="number" id="angle" placeholder="Độ nghiêng (0-360)" min="0" max="360" /></td></tr>
-                <tr><td><label>Nền một bên</label></td><td>
-                <input type="color" id="color1" placeholder="Màu 1" /></td></tr>
-                <tr><td><label>Nền bên còn lại</label></td><td>
-                <input type="color" id="color2" placeholder="Màu 2" /></td></tr>
-                <tr><td><label>Nút Đăng nhập</label></td><td>
-                <input type="color" id="color3" placeholder="Màu 3" /></td></tr>
-                <tr><td><label>Rê chuột vào nút</label></td><td>
-                <input type="color" id="color6" placeholder="Màu 6" /></td></tr>
-                <tr><td><label>Chữ Đăng nhập</label></td><td>
-                <input type="color" id="color4" placeholder="Màu 4" /></td></tr>
-                <tr><td><label>Liên kết (QMK&ĐK)</label></td><td>
-                <input type="color" id="color5" placeholder="Màu 5" /></td></tr>
-                <tr><td><label>Chữ trong hộp</label></td><td>
-                <input type="color" id="color7" placeholder="Màu chữ" /></td></tr>
+                <tr><td><label data-i18n="label_angle">Độ nghiêng chuyển màu</label></td><td>
+                <input type="number" id="angle" data-i18n-placeholder="placeholder_angle" placeholder="Độ nghiêng (0-360)" min="0" max="360" value="135" /></td></tr>
+                <tr><td><label data-i18n="label_color1">Nền một bên</label></td><td>
+                <input type="color" id="color1" value="#1f2937" /></td></tr>
+                <tr><td><label data-i18n="label_color2">Nền bên còn lại</label></td><td>
+                <input type="color" id="color2" value="#0d1117" /></td></tr>
+                <tr><td><label data-i18n="label_color3">Nút Đăng nhập</label></td><td>
+                <input type="color" id="color3" value="#238636" /></td></tr>
+                <tr><td><label data-i18n="label_color6">Rê chuột vào nút</label></td><td>
+                <input type="color" id="color6" value="#2ea043" /></td></tr>
+                <tr><td><label data-i18n="label_color4">Chữ Đăng nhập</label></td><td>
+                <input type="color" id="color4" value="#ffffff" /></td></tr>
+                <tr><td><label data-i18n="label_color5">Liên kết (QMK&ĐK)</label></td><td>
+                <input type="color" id="color5" value="#58a6ff" /></td></tr>
+                <tr><td><label data-i18n="label_color7">Chữ trong hộp</label></td><td>
+                <input type="color" id="color7" value="#e6edf3" /></td></tr>
                 </table>
-                <button type="button" class="btn" id="createButton">Tạo</button>
+                <button type="button" class="btn" id="createButton" data-i18n="button_create">Tạo</button>
             </form>
+
+            <hr class="sep" />
+
+            <!-- IMPORT JSON -->
+            <h3 data-i18n="heading_import_json">Nhập JSON tùy chỉnh</h3>
+            <p class="hint" data-i18n="hint_import_json">
+                Dán JSON dạng { "vi": {...}, "en": {...}, "ja": {...} } hoặc chọn file lang.json để ghi đè bộ từ điển.
+            </p>
+            <textarea id="jsonInput" class="code-input" rows="6" spellcheck="false"
+                placeholder='{"vi": {"title": "...", "output": {"login_heading": "..."}}}'></textarea>
+            <div class="row">
+                <button type="button" class="btn" id="applyJsonBtn" data-i18n="button_apply_json">Áp dụng JSON</button>
+                <label class="file-btn">
+                    <input type="file" id="jsonFile" accept="application/json,.json" hidden />
+                    <span data-i18n="button_load_file">Chọn file lang.json</span>
+                </label>
+                <button type="button" class="btn ghost" id="resetJsonBtn" data-i18n="button_reset_json">Khôi phục mặc định</button>
+            </div>
+            <div id="jsonStatus" class="status"></div>
         </div>
+
+        <!-- CỘT GIỮA: preview -->
+        <div class="middle-column">
+            <h2 data-i18n="heading_preview">Xem trước</h2>
+            <div class="preview-frame-wrap">
+                <iframe id="previewFrame" title="Preview" sandbox="allow-scripts allow-forms"></iframe>
+            </div>
+            <div class="row">
+                <button type="button" class="btn ghost" id="refreshPreviewBtn" data-i18n="button_refresh_preview">Làm mới xem trước</button>
+            </div>
+        </div>
+
+        <!-- CỘT PHẢI: output -->
         <div class="right-column">
-            <h2>Kết Quả</h2>
-            Output HTML (index.html):
-            <textarea class="output-box" id="output1" rows="3" readonly><!DOCTYPE html> <html lang="vi"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Đăng Nhập</title> <link rel="stylesheet" href="style.css"> </head> <body> <div class="container"> <div class="login-box"> <h2>Đăng Nhập</h2> <form id="loginForm"> <div class="textbox"> <input type="text" id="username" placeholder="Tên đăng nhập" required> </div> <div class="textbox"> <input type="password" id="password" placeholder="Mật khẩu" required> <span id="togglePassword" class="toggle-password">👁️</span> </div> <div class="remember-me"> <label> <input type="checkbox"> Ghi nhớ đăng nhập</label> </div> <button type="submit" class="btn">Đăng Nhập</button> <div class="error-message" id="error-message"></div> <div class="links"> <a href="#">Quên mật khẩu?</a> <a href="#">Đăng ký</a> </div> </form> </div> </div> <script src="script.js"></script> </body> </html>
-            </textarea>
-            Output JS (script.js):
-            <textarea class="output-box" id="output2" rows="3" readonly>document.getElementById("loginForm").addEventListener("submit",function(t){t.preventDefault();const e=document.getElementById("error-message");e.textContent="";var n=document.getElementById("username").value,t=document.getElementById("password").value;n&&t?alert("Đăng nhập thành công!"):e.textContent="Vui lòng điền đầy đủ thông tin!"});const togglePassword=document.getElementById("togglePassword"),passwordInput=document.getElementById("password");togglePassword.addEventListener("click",function(){var t="password"===passwordInput.getAttribute("type")?"text":"password";passwordInput.setAttribute("type",t),this.textContent="password"==t?"👁️":"🙈"});
-            </textarea>
-            Output CSS (style.css):
-            <textarea class="output-box" id="output3" rows="3" readonly>*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;height:100vh;display:flex;justify-content:center;align-items:center;background:linear-gradient(<input độ nghiêng>deg,<input màu 1>,<input màu 2>)}.container{display:flex;justify-content:center;align-items:center}.login-box{background:rgb(255 255 255 / .8);backdrop-filter:blur(10px);border-radius:15px;padding:20px;width:300px;box-shadow:0 0 10px rgb(0 0 0 / .1)}h2{text-align:center;margin-bottom:20px}.textbox{margin-bottom:15px;position:relative}.textbox input{width:100%;padding:10px;border:1px solid #ccc;border-radius:5px}.toggle-password{position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer}.remember-me{margin:10px 0}.btn{width:100%;padding:10px;border:none;background-color:<input màu 3>;color:<input màu 4>;border-radius:5px;cursor:pointer}.btn:hover{background-color:<input màu 6>}.links{display:flex;justify-content:space-between;margin-top:10px}.links a{color:<input màu 5>;text-decoration:none}.links a:hover{text-decoration:underline}.error-message{color:red;text-align:center;margin-top:10px}
-            </textarea>
+            <h2 data-i18n="heading_result">Kết Quả</h2>
+            <span data-i18n="output_html">Output HTML (index.html):</span>
+            <textarea class="output-box" id="output1" rows="3" readonly></textarea>
+            <span data-i18n="output_js">Output JS (script.js):</span>
+            <textarea class="output-box" id="output2" rows="3" readonly></textarea>
+            <span data-i18n="output_css">Output CSS (style.css):</span>
+            <textarea class="output-box" id="output3" rows="3" readonly></textarea>
         </div>
     </div>
     <script src="script.js"></script>
