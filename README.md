@@ -68,7 +68,7 @@ Contributions are welcome! Feel free to submit a Pull Request or open an Issue.
 
 ### 🛠️ For Developers (How to add/edit translations)
 To add a new language or modify existing text:
-1. Open the `script.js` file (or `lang-legal.json` for legal pages).
+1. Open the `script.js` file.
 2. Locate the `DEFAULT_TRANSLATIONS` object.
 3. Add a new language key (e.g., `fr` for French) and provide the translations for all keys. 
    *Example:*
