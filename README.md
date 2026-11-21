@@ -4,7 +4,7 @@ A dynamic login page generator that allows users to customize colors, gradients,
 
 ## 🚀 Live Demo
 
-Check out the live demo: [https://www.sieu.io.vn/github/simple-theme-login-site-generator](https://www.sieu.io.vn/github/simple-theme-login-site-generator)
+Check out the live demo: [https://sieu.io.vn/github/simple-theme-login-site-generator](https://sieu.io.vn/github/simple-theme-login-site-generator)
 
 ## ✨ Features
 
@@ -14,6 +14,7 @@ Check out the live demo: [https://www.sieu.io.vn/github/simple-theme-login-site-
 - **Interactive Login Form** – Includes username, password, "Remember Me" checkbox, and password visibility toggle
 - **Responsive Design** – Works seamlessly on desktop, tablet, and mobile devices
 - **Clean UI** – Modern, user-friendly interface with smooth transitions
+- **Multi-language Support (VI/EN/JA):** Fully localized in Vietnamese, English, and Japanese with instant, reload-free switching, persistent user preferences (`localStorage`), and embedded translation dictionaries for maximum performance.
 
 ## 🛠️ Technologies Used
 
@@ -64,6 +65,25 @@ Contributions are welcome! Feel free to submit a Pull Request or open an Issue.
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### 🛠️ For Developers (How to add/edit translations)
+To add a new language or modify existing text:
+1. Open the `script.js` file (or `lang-legal.json` for legal pages).
+2. Locate the `DEFAULT_TRANSLATIONS` object.
+3. Add a new language key (e.g., `fr` for French) and provide the translations for all keys. 
+   *Example:*
+   ```javascript
+   const DEFAULT_TRANSLATIONS = {
+     vi: { /* ... */ },
+     en: { /* ... */ },
+     ja: { /* ... */ },
+     // Add new language here:
+     fr: {
+       page_title: "Quiz sur les identités algébriques",
+       // ... other keys
+     }
+   };
+   ```
 
 ## 📄 License
 This project is open-source and available under the MIT License.
