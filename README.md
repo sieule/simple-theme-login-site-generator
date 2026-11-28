@@ -79,7 +79,7 @@ To add a new language or modify existing text:
      ja: { /* ... */ },
      // Add new language here:
      fr: {
-       page_title: "Quiz sur les identités algébriques",
+       page_title: "...",
        // ... other keys
      }
    };
